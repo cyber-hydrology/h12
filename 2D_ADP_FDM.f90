@@ -12,30 +12,30 @@
     program main
 
     use globals
-    use omp_lib
-    use mpi 
+!    use omp_lib
+!    use mpi 
     implicit none
   
     real*8:: time0, timmax
     real*8:: start, finish,tstart,tfinish
     integer:: i, j, lpout, lkout, ms, ci, mstep
-    integer:: nci, rc, uc, nthreads, nid,tempstart,tempend
+!    integer:: nci, rc, uc, nthreads, nid,tempstart,tempend
     logical(4):: resultqq,systemqq
 !   ===============================================
 !              Initialization of MPI process
 !   =====================================================
-print*,'start'
-      call MPI_INIT(ierror)
-      call MPI_COMM_SIZE(MPI_COMM_WORLD, nsize, ierror)
-      call MPI_COMM_RANK(MPI_COMM_WORLD, rank, ierror)
-      npart = nsize - 1
-      !$OMP PARALLEL private(nthreads)
-      nthreads = OMP_GET_NUM_THREADS()
-      nid = OMP_GET_THREAD_NUM()
-      if(rank.eq.0)then
-        if(nid.eq.1)write(*,*)'no. MPI: ', nsize,' no. omp: ',nthreads      
-      endif
-      !$OMP END PARALLEL
+!print*,'start'
+!      call MPI_INIT(ierror)
+!      call MPI_COMM_SIZE(MPI_COMM_WORLD, nsize, ierror)
+!      call MPI_COMM_RANK(MPI_COMM_WORLD, rank, ierror)
+!      npart = nsize - 1
+!      !$OMP PARALLEL private(nthreads)
+!      nthreads = OMP_GET_NUM_THREADS()
+!      nid = OMP_GET_THREAD_NUM()
+!      if(rank.eq.0)then
+!        if(nid.eq.1)write(*,*)'no. MPI: ', nsize,' no. omp: ',nthreads      
+!      endif
+!      !$OMP END PARALLEL
 
       
   
@@ -43,16 +43,16 @@ print*,'start'
 !              NUMBER OF SIMULATION CASES
 !   =====================================================
 	do ci=1, 1
-     start = MPI_Wtime()
+!     start = MPI_Wtime()
 
-     if(rank.eq.0)print'("start cpu time=",f12.3,"<sec>")', start
+!     if(rank.eq.0)print'("start cpu time=",f12.3,"<sec>")', start
    
 !   =====================================================	
 !                      READING DATA
 !     =====================================================
-      if(rank.eq.0)print*,"start reading data"
+!      if(rank.eq.0)print*,"start reading data"
       call rdat(time0, timmax, lpout, lkout,  ci)
-      if(rank.eq.0)print*,"finish reading data"
+!      if(rank.eq.0)print*,"finish reading data"
       
 
 !     =====================================================
@@ -77,13 +77,13 @@ print*,'start'
 !                    INITIALIZATION
 !     =====================================================
       call initiald
-      if(rank.eq.0)write(*,*)'end initiald'
+!      if(rank.eq.0)write(*,*)'end initiald'
 !
 !      call ascout_h(time, ci)
 !      call ascout_u
 !      call ascout_v
 !
-      call MPI_BARRIER(MPI_COMM_WORLD,ierror)
+!      call MPI_BARRIER(MPI_COMM_WORLD,ierror)
 !     =====================================================
       time = time0
       mstep = 0
@@ -101,10 +101,10 @@ print*,'start'
 !     ====================
 !     ERROR TREATMENT
 !     ====================
-!$omp barrier
-!$omp parallel do private(rc,uc)
-!        do nci=1, ncell
-      do nci=tempstart, tempend
+!!$omp barrier
+!!$omp parallel do private(rc,uc)
+        do nci=1, ncell
+!      do nci=tempstart, tempend
           rc = nei_info(nci,2)
           uc = nei_info(nci,1)
           if(rc==0) cycle
@@ -151,9 +151,9 @@ print*,'start'
 !                           writing data
 !     =================================================================
       if(mod(mstep,lpout)==0)then
-        if(rank.eq.0)write(*,'(f14.4)') time
+!        if(rank.eq.0)write(*,'(f14.4)') time
           finish=MPI_Wtime()
-        if(rank.eq.0)print'("running cpu time=",f12.3," <sec>")', finish-start
+!        if(rank.eq.0)print'("running cpu time=",f12.3," <sec>")', finish-start
       endif
 
        if(mod(mstep,lkout) == 0)then
@@ -182,8 +182,8 @@ print*,'start'
      !   resultqq=systemqq('rm -f /tmp/shm/ascout_h*')
      !   write(*,*)'systemqq resultqq:',resultqq
      ! endif
-      call MPI_BARRIER(MPI_COMM_WORLD,ierror) 
+!      call MPI_BARRIER(MPI_COMM_WORLD,ierror) 
       enddo
 
-	  call MPI_FINALIZE(ierror) 
+!	  call MPI_FINALIZE(ierror) 
 	end program main
