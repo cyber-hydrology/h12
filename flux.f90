@@ -6,8 +6,8 @@
 !     ====================================
       subroutine flux
       use globals
-      use omp_lib
-      use mpi
+!      use omp_lib
+!      use mpi
      
       implicit none
       
@@ -22,7 +22,7 @@
       real*8:: umo_rc, umo_lc, umo_uc, umo_dc
       real*8:: vno_rc, vno_lc, vno_uc, vno_dc
       real*8:: val_temp
-      integer:: nci, lc, rc, uc, dc, ruc, rdc, ldc, luc,lev, levn, ndir
+!      integer:: nci, lc, rc, uc, dc, ruc, rdc, ldc, luc,lev, levn, ndir
       integer:: modex, modey, nm, int_temp
 !     ------------------------------------
 !             MPI local variables
@@ -361,47 +361,48 @@ inf,um_fine, vn_fine,c_lev_id, c_land)
 !      val_temp=(vn_fine(nei_info(nci,3))+vn_fine(nei_info(nei_info(nci,3),2)))*0.5d0
 !      vn(nci)=val_temp
 !    endif
-		enddo
+!		enddo
 !$omp end parallel do
 !$omp barrier
 !      if(rank.eq.0)tstart=omp_get_wtime()
-      if(rank.ne.npart)then
-        call MPI_ISEND(um(imoveupstart(rank):imoveupend(rank)),ighost, &
-        MPI_REAL8,rank+1,tag(2), MPI_COMM_WORLD,send_request(2),ierror)
-        call MPI_ISEND(vn(imoveupstart(rank):imoveupend(rank)),ighost, &
-        MPI_REAL8,rank+1,tag(3), MPI_COMM_WORLD,send_request(3),ierror)
+!      if(rank.ne.npart)then
+!        call MPI_ISEND(um(imoveupstart(rank):imoveupend(rank)),ighost, &
+!        MPI_REAL8,rank+1,tag(2), MPI_COMM_WORLD,send_request(2),ierror)
+!        call MPI_ISEND(vn(imoveupstart(rank):imoveupend(rank)),ighost, &
+!        MPI_REAL8,rank+1,tag(3), MPI_COMM_WORLD,send_request(3),ierror)
         
-        call MPI_IRECV(um(imovedownstart(rank+1):imovedownend(rank+1)),ighost, &
-        MPI_REAL8,rank+1,tag(4), MPI_COMM_WORLD,recv_request(4),ierror)
-        call MPI_IRECV(vn(imovedownstart(rank+1):imovedownend(rank+1)),ighost, &
-        MPI_REAL8,rank+1,tag(5), MPI_COMM_WORLD,recv_request(5),ierror)
+!        call MPI_IRECV(um(imovedownstart(rank+1):imovedownend(rank+1)),ighost, &
+!        MPI_REAL8,rank+1,tag(4), MPI_COMM_WORLD,recv_request(4),ierror)
+!        call MPI_IRECV(vn(imovedownstart(rank+1):imovedownend(rank+1)),ighost, &
+!        MPI_REAL8,rank+1,tag(5), MPI_COMM_WORLD,recv_request(5),ierror)
         
-        call MPI_WAIT(send_request(2),status,ierror)
-        call MPI_WAIT(send_request(3),status,ierror)
-        call MPI_WAIT(recv_request(4),status,ierror)
-        call MPI_WAIT(recv_request(5),status,ierror)
+!        call MPI_WAIT(send_request(2),status,ierror)
+!        call MPI_WAIT(send_request(3),status,ierror)
+!        call MPI_WAIT(recv_request(4),status,ierror)
+!        call MPI_WAIT(recv_request(5),status,ierror)
 !        print*,'recv at rank',rank,'ighost',ighost,imovedownend(rank+1)-imovedownstart(rank+1)+1, &
 !        imovedownend(rank+1),imovedownstart(rank+1)
-      endif
-      if(rank.ne.0)then
-        call MPI_IRECV(um(imoveupstart(rank-1):imoveupend(rank-1)),ighost, &
-        MPI_REAL8,rank-1,tag(2), MPI_COMM_WORLD,recv_request(2),ierror)
-        call MPI_IRECV(vn(imoveupstart(rank-1):imoveupend(rank-1)),ighost, &
-        MPI_REAL8,rank-1,tag(3), MPI_COMM_WORLD,recv_request(3),ierror)
+!      endif
+!      if(rank.ne.0)then
+!        call MPI_IRECV(um(imoveupstart(rank-1):imoveupend(rank-1)),ighost, &
+!        MPI_REAL8,rank-1,tag(2), MPI_COMM_WORLD,recv_request(2),ierror)
+!        call MPI_IRECV(vn(imoveupstart(rank-1):imoveupend(rank-1)),ighost, &
+!        MPI_REAL8,rank-1,tag(3), MPI_COMM_WORLD,recv_request(3),ierror)
         
-        call MPI_ISEND(um(imovedownstart(rank):imovedownend(rank)),ighost, &
-        MPI_REAL8,rank-1,tag(4), MPI_COMM_WORLD,send_request(4),ierror)
-        call MPI_ISEND(vn(imovedownstart(rank):imovedownend(rank)),ighost, &
-        MPI_REAL8,rank-1,tag(5), MPI_COMM_WORLD,send_request(5),ierror)
+!        call MPI_ISEND(um(imovedownstart(rank):imovedownend(rank)),ighost, &
+!        MPI_REAL8,rank-1,tag(4), MPI_COMM_WORLD,send_request(4),ierror)
+!        call MPI_ISEND(vn(imovedownstart(rank):imovedownend(rank)),ighost, &
+!        MPI_REAL8,rank-1,tag(5), MPI_COMM_WORLD,send_request(5),ierror)
         
-        call MPI_WAIT(recv_request(2),status,ierror)
-        call MPI_WAIT(recv_request(3),status,ierror)
-        call MPI_WAIT(send_request(4),status,ierror)
-        call MPI_WAIT(send_request(5),status,ierror)
+!        call MPI_WAIT(recv_request(2),status,ierror)
+!        call MPI_WAIT(recv_request(3),status,ierror)
+!        call MPI_WAIT(send_request(4),status,ierror)
+!        call MPI_WAIT(send_request(5),status,ierror)
 !        print*,'send from rank',rank,'ighost',ighost,imovedownend(rank)-imovedownstart(rank)+1, &
 !        imovedownend(rank),imovedownstart(rank)
-      endif
-      call MPI_BARRIER(MPI_COMM_WORLD,ierror)
+!      endif
+!      call MPI_BARRIER(MPI_COMM_WORLD,ierror)
 !      if(rank.eq.0)tfinish=omp_get_wtime()
 !      if(rank.eq.0)print'("mpi flux =",f12.3," <sec>")', tfinish-tstart
-end subroutine flux
+!end subroutine flux
+
