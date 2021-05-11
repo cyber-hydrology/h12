@@ -22,29 +22,29 @@
       real*8:: umo_rc, umo_lc, umo_uc, umo_dc
       real*8:: vno_rc, vno_lc, vno_uc, vno_dc
       real*8:: val_temp
-!      integer:: nci, lc, rc, uc, dc, ruc, rdc, ldc, luc,lev, levn, ndir
+      integer:: nci, lc, rc, uc, dc, ruc, rdc, ldc, luc,lev, levn, ndir
       integer:: modex, modey, nm, int_temp
 !     ------------------------------------
 !             MPI local variables
 !     ------------------------------------
-      integer:: i,j,tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
-      integer:: send_request(100),recv_request(100)
-      real*8:: tstart,tfinish
+!      integer:: i,j,tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
+!      integer:: send_request(100),recv_request(100)
+!      real*8:: tstart,tfinish
 
-    tempstart=istartarray(rank)
-    tempend=iendarray(rank)
+!    tempstart=istartarray(rank)
+!    tempend=iendarray(rank)
 !     ------------------------------------
 !             UM, VN calculation
 !     ------------------------------------
-!$omp barrier
-!$omp parallel do private(hhe,hhw,hhep,hhwp,hhan,sgnm,hh3,u13,u11uur,u11uul,umr,uml,u11,u12vvu, &
-u12vvd,umu,umd,u12,sqx,ram,hhn,hhs,hhnp,hhsp,v13,v11uur,v11uul,vnr,vnl,v11,v12vvu,v12vvd,vnu, &
-vnd,v12,sqy,ddx,ddy,h_lc,h_dc,baseo_lc,baseo_dc,uu1_rc,uu1_lc,uu1_rdc,uu1_dc,vv1_uc,vv1_luc, &
-vv1_lc,vv1_dc,umo_rc,umo_lc,umo_uc,umo_dc,vno_rc,vno_lc,vno_uc,vno_dc,nci,lc,rc,uc,dc,ruc,rdc,ldc,luc, &
-lev,levn,modex,modey,nm,val_temp, int_temp,rn) shared(h,baseo,um,vn,nei_info,umo,vno,vv1,uu1, &
-inf,um_fine, vn_fine,c_lev_id, c_land)
-!    do nci=1, ncell
-      do nci=tempstart, tempend
+!!$omp barrier
+!!$omp parallel do private(hhe,hhw,hhep,hhwp,hhan,sgnm,hh3,u13,u11uur,u11uul,umr,uml,u11,u12vvu, &
+! u12vvd,umu,umd,u12,sqx,ram,hhn,hhs,hhnp,hhsp,v13,v11uur,v11uul,vnr,vnl,v11,v12vvu,v12vvd,vnu, &
+! vnd,v12,sqy,ddx,ddy,h_lc,h_dc,baseo_lc,baseo_dc,uu1_rc,uu1_lc,uu1_rdc,uu1_dc,vv1_uc,vv1_luc, &
+! vv1_lc,vv1_dc,umo_rc,umo_lc,umo_uc,umo_dc,vno_rc,vno_lc,vno_uc,vno_dc,nci,lc,rc,uc,dc,ruc,rdc,ldc,luc, &
+! lev,levn,modex,modey,nm,val_temp, int_temp,rn) shared(h,baseo,um,vn,nei_info,umo,vno,vv1,uu1, &
+! inf,um_fine, vn_fine,c_lev_id, c_land)
+       do nci=1, ncell
+!      do nci=tempstart, tempend
 
         if(c_land(nci) ==10) rn = 1.0d0 ! water
         if(c_land(nci) ==20) rn = 1.0d0 ! impervious Surface
@@ -361,9 +361,9 @@ inf,um_fine, vn_fine,c_lev_id, c_land)
 !      val_temp=(vn_fine(nei_info(nci,3))+vn_fine(nei_info(nei_info(nci,3),2)))*0.5d0
 !      vn(nci)=val_temp
 !    endif
-!		enddo
-!$omp end parallel do
-!$omp barrier
+enddo
+!!$omp end parallel do
+!!$omp barrier
 !      if(rank.eq.0)tstart=omp_get_wtime()
 !      if(rank.ne.npart)then
 !        call MPI_ISEND(um(imoveupstart(rank):imoveupend(rank)),ighost, &
