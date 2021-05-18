@@ -153,8 +153,8 @@
 !        ighost=int(5000/1) !test value
 !         ighost=int(jm/(dx/2**div_max))
 !         ighost = int(jm*5)
-!         ighost = int(jm*4)
-         ighost = int(jm*2)
+          ighost = int(jm*4)
+!         ighost = int(jm*2)
 
 print*, 'jm=',jm,'dx=',dx, 'div_max=', div_max, 'ighost=',ighost
 
