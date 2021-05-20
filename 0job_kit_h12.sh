@@ -1,6 +1,6 @@
 #PBS -q workq
 #PBS -S /bin/bash 
-#PBS -l select=7:ncpus=24:mpiprocs=1:ompthreads=24
+#PBS -l select=4:ncpus=6:mpiprocs=1:ompthreads=6
 #PBS -l walltime=24:00:00 
 #PBS -V
 

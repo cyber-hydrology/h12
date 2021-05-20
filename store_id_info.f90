@@ -152,7 +152,7 @@
 !        ighost=int(20000/(div_max*dx))  !default for 1m resolution at ver0.98
 !        ighost=int(5000/1) !test value
 !         ighost=int(jm/(dx/2**div_max))
-          ighost = int(jm*5)
+          ighost = int(jm*3)
 !          ighost = int(jm*4)
 !         ighost = int(jm*2)
 

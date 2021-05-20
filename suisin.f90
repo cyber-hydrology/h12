@@ -215,27 +215,29 @@ y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
 !        enddo
 !    endif
 !    call MPI_BARRIER(MPI_COMM_WORLD,ierror)
-      if(rank.ne.0)then
-        do i=1,ic_no(rank)
-          htemp(i)=h(ic_location(rank,i))
-        enddo
-        call MPI_ISEND(htemp(1:ic_no(rank)),ic_no(rank), &
-                       MPI_REAL8,0,tag_h(rank), MPI_COMM_WORLD,send_request_h(rank),ierror)        
-        call MPI_WAIT(send_request_h(rank),status,ierror)
-      else
-        do j=1,npart
-           sendingrank = j
-           jstart=((j-1)*mnhl+1)
-           jend=((j-1)*mnhl+ic_no(j))
-           call MPI_IRECV(htemp(jstart:jend),ic_no(j), &
-                          MPI_REAL8,sendingrank,tag_h(j), MPI_COMM_WORLD,recv_request_h(j),ierror)
-           call MPI_WAIT(recv_request_h(j),status,ierror)
-           do k=1,ic_no(j)
-              h(ic_location(j,k))=htemp(jstart+k-1)
-           enddo
-        enddo
-      endif
-      call MPI_BARRIER(MPI_COMM_WORLD,ierror) 
+      
+!!   mpi communication for water levels at manhole lcations; not required for 2D only configuration by SJN May 20 2021   
+!      if(rank.ne.0)then
+!        do i=1,ic_no(rank)
+!          htemp(i)=h(ic_location(rank,i))
+!        enddo
+!        call MPI_ISEND(htemp(1:ic_no(rank)),ic_no(rank), &
+!                       MPI_REAL8,0,tag_h(rank), MPI_COMM_WORLD,send_request_h(rank),ierror)        
+!        call MPI_WAIT(send_request_h(rank),status,ierror)
+!      else
+!        do j=1,npart
+!           sendingrank = j
+!           jstart=((j-1)*mnhl+1)
+!           jend=((j-1)*mnhl+ic_no(j))
+!           call MPI_IRECV(htemp(jstart:jend),ic_no(j), &
+!                          MPI_REAL8,sendingrank,tag_h(j), MPI_COMM_WORLD,recv_request_h(j),ierror)
+!           call MPI_WAIT(recv_request_h(j),status,ierror)
+!           do k=1,ic_no(j)
+!              h(ic_location(j,k))=htemp(jstart+k-1)
+!           enddo
+!        enddo
+!      endif
+!      call MPI_BARRIER(MPI_COMM_WORLD,ierror) 
 
  end subroutine suisin
       
