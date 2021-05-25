@@ -3,8 +3,8 @@
 !     ====================================
 	  subroutine suisin
       use globals
-      use omp_lib
-      use mpi
+!      use omp_lib
+!      use mpi
       implicit none
 
       integer:: nci, lc, rc, uc, dc, ruc, rdc, ldc, luc, it
@@ -12,11 +12,11 @@
       real*8:: ddx, ddy, xc, yc, um_rc, vn_uc,rfcd,rr, level
       real*8:: x_dist, y_dist, x_rest, y_rest
       integer:: j,tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
-      integer:: recv_request(100),send_request(100)
-      real*8:: htemp(mnhl*npart),qlmetemp(mnhl*npart)
-      integer:: send_request_h(cnode),recv_request_h(cnode)
-      integer:: send_request_qlme(cnode),recv_request_qlme(cnode)
-      integer:: sendingrank,receiverank,tag_h(1:500)=(/(j,j=1,500)/),tag_qlme(1:500)=(/(j,j=1,500)/),jstart,jend
+!      integer:: recv_request(100),send_request(100)
+!      real*8:: htemp(mnhl*npart),qlmetemp(mnhl*npart)
+!      integer:: send_request_h(cnode),recv_request_h(cnode)
+!      integer:: send_request_qlme(cnode),recv_request_qlme(cnode)
+!      integer:: sendingrank,receiverank,tag_h(1:500)=(/(j,j=1,500)/),tag_qlme(1:500)=(/(j,j=1,500)/),jstart,jend
 
 !        if(rank.eq.0)then
 !            do j=1,npart
@@ -42,8 +42,8 @@
 !      call MPI_BCAST(qlme,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
 !      call MPI_BARRIER(MPI_COMM_WORLD,ierror)
       
-      tempstart=istartarray(rank)
-      tempend=iendarray(rank)
+!      tempstart=istartarray(rank)
+!      tempend=iendarray(rank)
 
       
       err_ini=0.0d0
@@ -53,7 +53,7 @@
 ddx,ddy,xc,yc,um_rc,vn_uc,rfcd,x_dist,y_dist,x_rest,y_rest,ir,jrm,jr,rr,it,level,irh)&
 shared(h,ho,um,vn,nei_info,c_lev_id,um_fine,vn_fine,c_land,qlme,x_rad_ori,&
 y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
-      do nci=tempstart,tempend
+      do nci=1, ncell
           lc = nei_info(nci,4); rc = nei_info(nci,2)
           uc = nei_info(nci,1); dc = nei_info(nci,3)
           ruc = nei_info(nci,5); rdc = nei_info(nci,6)
@@ -98,7 +98,7 @@ y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
 ! =====================================================
 !             x, y coordination calculation
 ! =====================================================
-        xc=ccoords(nci,1); yc=ccoords(nci,2)
+!        xc=ccoords(nci,1); yc=ccoords(nci,2)
         
 !         x_dist=xc-x_rad_ori
 !         y_dist=yc-y_rad_ori
@@ -150,8 +150,8 @@ y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
       endif
            ddx = dx/dble(2**lev)
 
-        h(nci) = ho(nci)-dt2*((um_rc-um(nci))/ddx+(vn_uc-vn(nci))/ddy-qlme(nci)-rr)
-        h(nci) = max(h(nci),0.0d0)
+!        h(nci) = ho(nci)-dt2*((um_rc-um(nci))/ddx+(vn_uc-vn(nci))/ddy-qlme(nci)-rr)
+!        h(nci) = max(h(nci),0.0d0)
 !       if(time>100)print*,nci, h(nci)
 !if(nci==647993) print*, time, h(nci-1),h(nci), h(nci+1)
 !--------down stream boundary condition----------------------------
@@ -172,31 +172,31 @@ y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
       
 !      if(rank.eq.0)tstart=omp_get_wtime()
     if(rank.ne.npart)then
-        call MPI_ISEND(h(imoveupstart(rank):imoveupend(rank)),ighost, &
-        MPI_REAL8,rank+1,tag(2), MPI_COMM_WORLD,send_request(2),ierror)
+!        call MPI_ISEND(h(imoveupstart(rank):imoveupend(rank)),ighost, &
+!        MPI_REAL8,rank+1,tag(2), MPI_COMM_WORLD,send_request(2),ierror)
         
-        call MPI_IRECV(h(imovedownstart(rank+1):imovedownend(rank+1)),ighost, &
-        MPI_REAL8,rank+1,tag(4), MPI_COMM_WORLD,recv_request(4),ierror)
+!        call MPI_IRECV(h(imovedownstart(rank+1):imovedownend(rank+1)),ighost, &
+!        MPI_REAL8,rank+1,tag(4), MPI_COMM_WORLD,recv_request(4),ierror)
         
-        call MPI_WAIT(send_request(2),status,ierror)
-        call MPI_WAIT(recv_request(4),status,ierror)
+!        call MPI_WAIT(send_request(2),status,ierror)
+!        call MPI_WAIT(recv_request(4),status,ierror)
 !        print*,'mpi_send from rank',rank,'ighost',ighost,imoveupend(rank)-imoveupstart(rank)+1, &
 !        imoveupend(rank),imoveupstart(rank)
     endif
-    if(rank.ne.0)then
-        call MPI_IRECV(h(imoveupstart(rank-1):imoveupend(rank-1)),ighost, &
-        MPI_REAL8,rank-1,tag(2), MPI_COMM_WORLD,recv_request(2),ierror)
+!    if(rank.ne.0)then
+!        call MPI_IRECV(h(imoveupstart(rank-1):imoveupend(rank-1)),ighost, &
+!        MPI_REAL8,rank-1,tag(2), MPI_COMM_WORLD,recv_request(2),ierror)
 
-        call MPI_ISEND(h(imovedownstart(rank):imovedownend(rank)),ighost, &
-        MPI_REAL8,rank-1,tag(4), MPI_COMM_WORLD,send_request(4),ierror)
+!        call MPI_ISEND(h(imovedownstart(rank):imovedownend(rank)),ighost, &
+!        MPI_REAL8,rank-1,tag(4), MPI_COMM_WORLD,send_request(4),ierror)
         
-        call MPI_WAIT(recv_request(2),status,ierror)
-        call MPI_WAIT(send_request(4),status,ierror)
+!        call MPI_WAIT(recv_request(2),status,ierror)
+!        call MPI_WAIT(send_request(4),status,ierror)
 !        print*,'mpi_recv at rank',rank,'ghost',ighost,imoveupend(rank-1)-imoveupstart(rank-1)+1, &
 !        imoveupend(rank-1),imoveupstart(rank-1)
     endif
 !    call MPI_BCAST(h,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
-      call MPI_BARRIER(MPI_COMM_WORLD,ierror)
+!      call MPI_BARRIER(MPI_COMM_WORLD,ierror)
 !      if(rank.eq.0)tfinish=omp_get_wtime()
 !      if(rank.eq.0)print'("mpi suisin =",f12.3," <sec>")', tfinish-tstart
 
@@ -219,23 +219,23 @@ y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
         do i=1,ic_no(rank)
           htemp(i)=h(ic_location(rank,i))
         enddo
-        call MPI_ISEND(htemp(1:ic_no(rank)),ic_no(rank), &
-                       MPI_REAL8,0,tag_h(rank), MPI_COMM_WORLD,send_request_h(rank),ierror)        
-        call MPI_WAIT(send_request_h(rank),status,ierror)
+!        call MPI_ISEND(htemp(1:ic_no(rank)),ic_no(rank), &
+!                       MPI_REAL8,0,tag_h(rank), MPI_COMM_WORLD,send_request_h(rank),ierror)        
+!        call MPI_WAIT(send_request_h(rank),status,ierror)
       else
         do j=1,npart
            sendingrank = j
            jstart=((j-1)*mnhl+1)
            jend=((j-1)*mnhl+ic_no(j))
-           call MPI_IRECV(htemp(jstart:jend),ic_no(j), &
-                          MPI_REAL8,sendingrank,tag_h(j), MPI_COMM_WORLD,recv_request_h(j),ierror)
-           call MPI_WAIT(recv_request_h(j),status,ierror)
+!           call MPI_IRECV(htemp(jstart:jend),ic_no(j), &
+!                          MPI_REAL8,sendingrank,tag_h(j), MPI_COMM_WORLD,recv_request_h(j),ierror)
+!           call MPI_WAIT(recv_request_h(j),status,ierror)
            do k=1,ic_no(j)
               h(ic_location(j,k))=htemp(jstart+k-1)
            enddo
         enddo
       endif
-      call MPI_BARRIER(MPI_COMM_WORLD,ierror) 
+!      call MPI_BARRIER(MPI_COMM_WORLD,ierror) 
 
  end subroutine suisin
       
