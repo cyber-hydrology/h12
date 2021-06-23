@@ -5,37 +5,37 @@
                  !       qo_sw,q_sw,ao_sw,a_sw,ql_sw,mnhl,&
                  !       ho_mh,h_mh,qsum_mh,hsum_mh,&
                  !       rank,istartarray,iendarray,ierror
-      use omp_lib
-      use mpi
+!      use omp_lib
+!      use mpi
       implicit none
       
-      integer:: i,j,nci
+!      integer:: i,j,nci
     real*8:: tstart,tfinish
-      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
+!      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
 !    call MPI_BARRIER(MPI_COMM_WORLD,ierror)   
-    tempstart=istartarray(rank)
-    tempend=iendarray(rank)
+!    tempstart=istartarray(rank)
+!    tempend=iendarray(rank)
 !    if(rank.eq.1)tstart = MPI_Wtime()
 !$omp barrier
 !$omp parallel do
-    do nci=tempstart,tempend
-      umo(nci)= um(nci); vno(nci)=vn(nci)
-      ho(nci) = h(nci)
-      um_fine(nci)=0.0d0
-      vn_fine(nci)=0.0d0
-      qlme(nci)=0.0d0
-    enddo
-!$omp end parallel do
-!$omp barrier
+!    do nci=tempstart,tempend
+!      umo(nci)= um(nci); vno(nci)=vn(nci)
+!      ho(nci) = h(nci)
+!      um_fine(nci)=0.0d0
+!      vn_fine(nci)=0.0d0
+!      qlme(nci)=0.0d0
+!    enddo
+!!$omp end parallel do
+!!$omp barrier
 
     if(rank.eq.0)then
-!$omp barrier
-!$omp parallel do
-    do i=1, cnode
-      qlme(cn_cell(i))=0.0d0
-    enddo
-!$omp end parallel do
-!$omp barrier
+!!$omp barrier
+!!$omp parallel do
+!    do i=1, cnode
+!      qlme(cn_cell(i))=0.0d0
+!    enddo
+!!$omp end parallel do
+!!$omp barrier
 
 !!$omp barrier
 !!$omp parallel do
