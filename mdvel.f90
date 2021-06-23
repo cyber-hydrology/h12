@@ -3,8 +3,8 @@
 !     ====================================
       subroutine mdvel
       use globals
-      use omp_lib
-      use mpi    
+!      use omp_lib
+!      use mpi    
       implicit none
 
     real*8:: h_lc, h_n, h_dc, baseo_lc, baseo_dc
@@ -22,10 +22,10 @@
 !     =================================
     tempstart=istartarray(rank)
     tempend=iendarray(rank)
-!      if(rank.eq.0)tstart = omp_get_wtime()
-!$omp barrier
-!$omp parallel do private(h_lc,h_dc,lc,rc,uc,dc)
-      do nci=tempstart,tempend
+!!      if(rank.eq.0)tstart = omp_get_wtime()
+!!$omp barrier
+!!$omp parallel do private(h_lc,h_dc,lc,rc,uc,dc)
+!      do nci=tempstart,tempend
       lc = nei_info(nci,4); rc = nei_info(nci,2)
       uc = nei_info(nci,1); dc = nei_info(nci,3)
         if(dc==0)then
@@ -68,14 +68,14 @@
       endif
     
     enddo
-!$omp end parallel do
-!$omp barrier
+!!$omp end parallel do
+!!$omp barrier
 !
 !     =================================
 !        uu1, vv1 calculation
 !     =================================
-!$omp barrier
-!$omp parallel do private(lc,rc,uc,dc)
+!!$omp barrier
+!!$omp parallel do private(lc,rc,uc,dc)
 	  do nci=tempstart,tempend
       lc = nei_info(nci,4); rc = nei_info(nci,2)
       uc = nei_info(nci,1); dc = nei_info(nci,3)
@@ -110,13 +110,13 @@
         endif
       endif
     enddo
-!$omp end parallel do
-!$omp barrier
+!!$omp end parallel do
+!!$omp barrier
 !     =================================
 !        uu, vv calculation
 !     =================================
-!$omp barrier
-!$omp parallel do private(vv1_uc,uu1_rc,lc,rc,uc,dc)
+!!$omp barrier
+!!$omp parallel do private(vv1_uc,uu1_rc,lc,rc,uc,dc)
 	  do nci=tempstart,tempend
       lc = nei_info(nci,4); rc = nei_info(nci,2)
       uc = nei_info(nci,1); dc = nei_info(nci,3)
@@ -148,20 +148,20 @@
           uu(nci)=0.0d0; vv(nci)=0.0d0
         endif
     enddo
-!$omp end parallel do
-!$omp barrier
+!!$omp end parallel do
+!!$omp barrier
 !     =================================
 !        uua, vva calculation
 !     =================================
-!$omp barrier
-!$omp parallel do private(vv1_uc,uu1_rc,uu1_dc,vv1_lc,uu1_rdc,vv1_luc, &
+!!$omp barrier
+!!$omp parallel do private(vv1_uc,uu1_rc,uu1_dc,vv1_lc,uu1_rdc,vv1_luc, &
 lc,rc,uc,dc,ruc,rdc,ldc,luc)
 !    do nci=1, ncell
-	  do nci=tempstart,tempend
-      lc = nei_info(nci,4); rc = nei_info(nci,2)
-      uc = nei_info(nci,1); dc = nei_info(nci,3)
-      ruc = nei_info(nci,5); rdc = nei_info(nci,6)
-      ldc = nei_info(nci,7); luc = nei_info(nci,8)
+!	  do nci=tempstart,tempend
+!      lc = nei_info(nci,4); rc = nei_info(nci,2)
+!      uc = nei_info(nci,1); dc = nei_info(nci,3)
+!      ruc = nei_info(nci,5); rdc = nei_info(nci,6)
+!      ldc = nei_info(nci,7); luc = nei_info(nci,8)
 !          
         if(uc==0)then
           vv1_uc=vv1_ugc(nci)
@@ -214,8 +214,8 @@ lc,rc,uc,dc,ruc,rdc,ldc,luc)
         if(rc==0) vva_rgc(nci) = 0.5d0*(vv1(nci)+vv1_uc)
           
     enddo
-!$omp end parallel do
-!$omp barrier
+!!$omp end parallel do
+!!$omp barrier
   
 !    **************************************************
     end subroutine mdvel
