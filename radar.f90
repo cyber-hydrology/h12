@@ -4,8 +4,8 @@
 
     subroutine radar
     use globals
-    use omp_lib
-    use mpi
+!    use omp_lib
+!    use mpi
     implicit none
 
     
