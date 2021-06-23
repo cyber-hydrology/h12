@@ -2,7 +2,7 @@
     subroutine ascout_h(t,ci)
 !************************************
       use globals
-      use mpi
+!      use mpi
       implicit none
 
       integer::i,j,k,ci,cind,nm
@@ -10,16 +10,16 @@
       character(len=6)::ft
       integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)  ! MPI local variables
       
-    if(rank.ne.0)then
-        call MPI_SEND(h(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
-        MPI_REAL8,0,tag(4), MPI_COMM_WORLD,ierror)
-    else
-        do i=1,npart
-        call MPI_RECV(h(istarttransfer(i):iendtransfer(i)),ichunktransfer(i), &
-        MPI_REAL8,i,tag(4), MPI_COMM_WORLD,status,ierror)
-        enddo
-    endif
-    call MPI_BCAST(h,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
+!    if(rank.ne.0)then
+!        call MPI_SEND(h(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
+!        MPI_REAL8,0,tag(4), MPI_COMM_WORLD,ierror)
+!    else
+!        do i=1,npart
+!        call MPI_RECV(h(istarttransfer(i):iendtransfer(i)),ichunktransfer(i), &
+!        MPI_REAL8,i,tag(4), MPI_COMM_WORLD,status,ierror)
+!        enddo
+!    endif
+!    call MPI_BCAST(h,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
     
       if(rank.eq.0)then
       cind=0
@@ -68,7 +68,7 @@
     subroutine ascout_u(t,ci)
 !************************************
       use globals
-      use mpi
+!      use mpi
       implicit none
 
       integer::i,j,k,ci,cind,nm
@@ -76,16 +76,16 @@
       character(len=6)::ft
       integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)  ! MPI local variables
       
-    if(rank.ne.0)then
-        call MPI_SEND(um(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
-        MPI_REAL8,0,tag(4), MPI_COMM_WORLD,ierror)
-    else
-        do i=1,npart
-        call MPI_RECV(um(istarttransfer(i):iendtransfer(i)),ichunktransfer(i), &
-        MPI_REAL8,i,tag(4), MPI_COMM_WORLD,status,ierror)
-        enddo
-    endif
-    call MPI_BCAST(um,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
+!    if(rank.ne.0)then
+!        call MPI_SEND(um(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
+!        MPI_REAL8,0,tag(4), MPI_COMM_WORLD,ierror)
+!    else
+!        do i=1,npart
+!        call MPI_RECV(um(istarttransfer(i):iendtransfer(i)),ichunktransfer(i), &
+!        MPI_REAL8,i,tag(4), MPI_COMM_WORLD,status,ierror)
+!        enddo
+!    endif
+!    call MPI_BCAST(um,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
     
       if(rank.eq.0)then
       cind=0
@@ -138,7 +138,7 @@
     subroutine ascout_v(t,ci)
 !************************************
       use globals
-      use mpi
+!      use mpi
       implicit none
 
       integer::i,j,k,ci,cind,nm
@@ -146,16 +146,16 @@
       character(len=6)::ft
       integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)  ! MPI local variables
       
-    if(rank.ne.0)then
-        call MPI_SEND(vn(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
-        MPI_REAL8,0,tag(4), MPI_COMM_WORLD,ierror)
-    else
-        do i=1,npart
-        call MPI_RECV(vn(istarttransfer(i):iendtransfer(i)),ichunktransfer(i), &
-        MPI_REAL8,i,tag(4), MPI_COMM_WORLD,status,ierror)
-        enddo
-    endif
-    call MPI_BCAST(vn,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
+!    if(rank.ne.0)then
+!        call MPI_SEND(vn(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
+!        MPI_REAL8,0,tag(4), MPI_COMM_WORLD,ierror)
+!    else
+!        do i=1,npart
+!        call MPI_RECV(vn(istarttransfer(i):iendtransfer(i)),ichunktransfer(i), &
+!        MPI_REAL8,i,tag(4), MPI_COMM_WORLD,status,ierror)
+!        enddo
+!    endif
+!    call MPI_BCAST(vn,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
     
       if(rank.eq.0)then
       cind=0
