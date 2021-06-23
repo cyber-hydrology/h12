@@ -1,7 +1,7 @@
         subroutine store_id_info
 
 	use globals
-    use mpi    
+!    use mpi    
 	implicit none
 	
 	integer::i,j,k,is,js,ms,lev,in,jn,isn,jsn,cind,sldbound,ndir,ix,jy,nm,ic,irank,temp_no
@@ -66,7 +66,7 @@
       allocate(hm(i), hn(i))
       allocate(cn_cell(i),cn_mh(i),qlme(i))
       allocate(cei(i))
-! 	 boundary data allocation
+ 	 boundary data allocation
 	  allocate(um_rgc(i), hm_rgc(i), vn_ugc(i), hn_ugc(i))
       allocate(uu1_rgc(i), vv1_ugc(i), uua_ugc(i), vva_rgc(i))
       if(rank.eq.0) write(*,*)'end allocation of variables'
@@ -213,19 +213,19 @@ print*, 'jm=',jm,'dx=',dx, 'div_max=', div_max, 'ighost=',ighost
             print*,'imovedownstart',imovedownstart
             print*,'imovedownend',imovedownend
         endif
-        call MPI_BCAST(istartarray,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
-        call MPI_BCAST(iendarray,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
+!        call MPI_BCAST(istartarray,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
+!        call MPI_BCAST(iendarray,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
         
-        call MPI_BCAST(ichunkarray,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
-        call MPI_BCAST(ichunktransfer,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
+!        call MPI_BCAST(ichunkarray,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
+!        call MPI_BCAST(ichunktransfer,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
         
-        call MPI_BCAST(istarttransfer,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
-        call MPI_BCAST(iendtransfer,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
+!        call MPI_BCAST(istarttransfer,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
+!        call MPI_BCAST(iendtransfer,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
         
-        call MPI_BCAST(imoveupstart,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
-        call MPI_BCAST(imoveupend,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
-        call MPI_BCAST(imovedownstart,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
-        call MPI_BCAST(imovedownend,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
+!        call MPI_BCAST(imoveupstart,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
+!        call MPI_BCAST(imoveupend,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
+!        call MPI_BCAST(imovedownstart,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
+!        call MPI_BCAST(imovedownend,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
 !==============================    
     allocate(ic_no(0:npart))
     allocate(ic_location(0:npart,int(mnhl/nsize*4)))
