@@ -2,7 +2,7 @@
 	subroutine paraout(t,ci)
 !************************************	    
 	use globals
-      use mpi    
+!      use mpi    
     implicit none
     
 	integer:: i, j, is, js, maxnode, ci
@@ -12,18 +12,18 @@
 	character(len=3):: cases
       integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)    
 !	========================================================    
-    if(rank.ne.0)then
-        call MPI_SEND(h(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
-        MPI_REAL8,0,tag(4), MPI_COMM_WORLD,ierror)
-        print*,'mpi_send h from rank',rank,'ichunktransfer',ichunktransfer(rank)
-    else
-        do i=1,npart
-        call MPI_RECV(h(istarttransfer(i):iendtransfer(i)),ichunktransfer(i), &
-        MPI_REAL8,i,tag(4), MPI_COMM_WORLD,status,ierror)
-        print*,'mpi_recv h at rank',rank,'i,ichunktransfer',i,ichunktransfer(i)
-        enddo
-    endif
-    call MPI_BARRIER(MPI_COMM_WORLD,ierror)
+!    if(rank.ne.0)then
+!        call MPI_SEND(h(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
+!        MPI_REAL8,0,tag(4), MPI_COMM_WORLD,ierror)
+!        print*,'mpi_send h from rank',rank,'ichunktransfer',ichunktransfer(rank)
+!    else
+!        do i=1,npart
+!        call MPI_RECV(h(istarttransfer(i):iendtransfer(i)),ichunktransfer(i), &
+!        MPI_REAL8,i,tag(4), MPI_COMM_WORLD,status,ierror)
+!        print*,'mpi_recv h at rank',rank,'i,ichunktransfer',i,ichunktransfer(i)
+!        enddo
+!    endif
+!    call MPI_BARRIER(MPI_COMM_WORLD,ierror)
        if(rank.eq.0)then
 !$$$$$$       write(out_time,'(i5)') nint(t*1000.d0)+10000
        write(out_time,'(i5)') nint(t)+10000
@@ -110,7 +110,7 @@
 !	========================================
     subroutine para_pipe(t,ci)
     use globals
-      use mpi    
+!      use mpi    
     implicit none
     
     integer:: i, j, k, nm,ci
@@ -250,7 +250,7 @@
 !	========================================
     subroutine para_mh(t,ci)
     use globals
-      use mpi     
+!      use mpi     
     implicit none
     
     integer:: i,j,k,ci
