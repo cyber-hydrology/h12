@@ -404,5 +404,5 @@ enddo
 !      call MPI_BARRIER(MPI_COMM_WORLD,ierror)
 !      if(rank.eq.0)tfinish=omp_get_wtime()
 !      if(rank.eq.0)print'("mpi flux =",f12.3," <sec>")', tfinish-tstart
-!end subroutine flux
+end subroutine flux
 

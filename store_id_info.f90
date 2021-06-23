@@ -54,7 +54,7 @@
 		enddo
 	enddo
       deallocate(ind)
-      if(rank.eq.0) write(*,*)'end store neighborhood cell info'
+      write(*,*)'end store neighborhood cell info'
 !   -------------------------------------
 !         Allocate variables
 !   -------------------------------------
@@ -66,10 +66,10 @@
       allocate(hm(i), hn(i))
       allocate(cn_cell(i),cn_mh(i),qlme(i))
       allocate(cei(i))
- 	 boundary data allocation
+! 	 boundary data allocation
 	  allocate(um_rgc(i), hm_rgc(i), vn_ugc(i), hn_ugc(i))
       allocate(uu1_rgc(i), vv1_ugc(i), uua_ugc(i), vva_rgc(i))
-      if(rank.eq.0) write(*,*)'end allocation of variables'
+      write(*,*)'end allocation of variables'
 !
 !   -------------------------------------
 !	     Calculation of baseo
@@ -144,75 +144,75 @@
           enddo
         enddo
           
-      if(rank.eq.0)print*,'end store_id_info'
+      print*,'end store_id_info'
 
 !     =====================================================
-        ichunk=int(ncell/nsize)
+!        ichunk=int(ncell/nsize)
 !        ighost=int(ichunk*0.05)
 !        ighost=int(20000/(div_max*dx))  !default for 1m resolution at ver0.98
 !        ighost=int(5000/1) !test value
 !         ighost=int(jm/(dx/2**div_max))
 !         ighost = int(jm*5)
 !         ighost = int(jm*4)
-         ighost = int(jm*2)
+!         ighost = int(jm*2)
 
 print*, 'jm=',jm,'dx=',dx, 'div_max=', div_max, 'ighost=',ighost
 
-        allocate(ichunkarray(0:npart),istartarray(0:npart),iendarray(0:npart)) 
-        allocate(istarttransfer(0:npart),iendtransfer(0:npart),ichunktransfer(0:npart))
-        allocate(imoveupstart(0:npart),imoveupend(0:npart))
-        allocate(imovedownstart(0:npart),imovedownend(0:npart))
-        if(rank.eq.0)then
-            ichunkarray(0)=ichunk+ighost
-            ichunkarray(1:npart-1)=ichunk+2*ighost
-            ichunkarray(npart)=ncell-ichunk*(npart)+ighost
-
-            ichunktransfer(0:npart-1)=ichunk
-            ichunktransfer(npart)=ncell-ichunk*(npart)
-            
-            istartarray(0)=1
-            iendarray(0)=ichunk+ighost
-            
-            istarttransfer(0)=1
-            iendtransfer(0)=ichunk
-            
-            imoveupstart(0)=ichunk-ighost+1
-            imoveupend(0)=ichunk
-            
-            imovedownstart(0)=0
-            imovedownend(0)=0
-            do i=1,npart-1
-                istartarray(i)=ichunk*(i)+1-ighost
-                iendarray(i)=ichunk*(i+1)+ighost
-                
-                istarttransfer(i)=ichunk*(i)+1
-                iendtransfer(i)=ichunk*(i+1)
-                
-                imoveupstart(i)=ichunk*(i+1)+1-ighost
-                imoveupend(i)=ichunk*(i+1)
-                
-                imovedownstart(i)=ichunk*(i)+1
-                imovedownend(i)=ichunk*(i)+ighost
-            enddo
-                istartarray(npart)=ncell-ichunkarray(npart)+1
-                iendarray(npart)=ncell
-                istarttransfer(npart)=ncell-ichunktransfer(npart)+1
-                iendtransfer(npart)=ncell
-                
-                imoveupstart(npart)=0
-                imoveupend(npart)=0
-                
-                imovedownstart(npart)=ichunk*(npart)+1
-                imovedownend(npart)=ichunk*(npart)+ighost
-            print*,'istartarray',istartarray
-            print*,'iendarray',iendarray
-            print*,'istarttransfer',istarttransfer
-            print*,'iendtransfer',iendtransfer
-            print*,'imoveupstart',imoveupstart
-            print*,'imoveupend',imoveupend
-            print*,'imovedownstart',imovedownstart
-            print*,'imovedownend',imovedownend
-        endif
+!        allocate(ichunkarray(0:npart),istartarray(0:npart),iendarray(0:npart)) 
+!        allocate(istarttransfer(0:npart),iendtransfer(0:npart),ichunktransfer(0:npart))
+!        allocate(imoveupstart(0:npart),imoveupend(0:npart))
+!        allocate(imovedownstart(0:npart),imovedownend(0:npart))
+!        if(rank.eq.0)then
+!            ichunkarray(0)=ichunk+ighost
+!            ichunkarray(1:npart-1)=ichunk+2*ighost
+!            ichunkarray(npart)=ncell-ichunk*(npart)+ighost
+!
+!            ichunktransfer(0:npart-1)=ichunk
+!            ichunktransfer(npart)=ncell-ichunk*(npart)
+!            
+!            istartarray(0)=1
+!            iendarray(0)=ichunk+ighost
+!            
+!            istarttransfer(0)=1
+!            iendtransfer(0)=ichunk
+!            
+!            imoveupstart(0)=ichunk-ighost+1
+!            imoveupend(0)=ichunk
+!            
+!            imovedownstart(0)=0
+!            imovedownend(0)=0
+!            do i=1,npart-1
+!                istartarray(i)=ichunk*(i)+1-ighost
+!                iendarray(i)=ichunk*(i+1)+ighost
+!                
+!                istarttransfer(i)=ichunk*(i)+1
+!                iendtransfer(i)=ichunk*(i+1)
+!                
+!                imoveupstart(i)=ichunk*(i+1)+1-ighost
+!                imoveupend(i)=ichunk*(i+1)
+!                
+!                imovedownstart(i)=ichunk*(i)+1
+!                imovedownend(i)=ichunk*(i)+ighost
+!            enddo
+!                istartarray(npart)=ncell-ichunkarray(npart)+1
+!                iendarray(npart)=ncell
+!                istarttransfer(npart)=ncell-ichunktransfer(npart)+1
+!                iendtransfer(npart)=ncell
+!                
+!                imoveupstart(npart)=0
+!                imoveupend(npart)=0
+!                
+!                imovedownstart(npart)=ichunk*(npart)+1
+!                imovedownend(npart)=ichunk*(npart)+ighost
+!            print*,'istartarray',istartarray
+!            print*,'iendarray',iendarray
+!            print*,'istarttransfer',istarttransfer
+!            print*,'iendtransfer',iendtransfer
+!            print*,'imoveupstart',imoveupstart
+!            print*,'imoveupend',imoveupend
+!            print*,'imovedownstart',imovedownstart
+!            print*,'imovedownend',imovedownend
+!        endif
 !        call MPI_BCAST(istartarray,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
 !        call MPI_BCAST(iendarray,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
         
@@ -227,27 +227,27 @@ print*, 'jm=',jm,'dx=',dx, 'div_max=', div_max, 'ighost=',ighost
 !        call MPI_BCAST(imovedownstart,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
 !        call MPI_BCAST(imovedownend,nsize,MPI_INTEGER,0,MPI_COMM_WORLD,ierror)
 !==============================    
-    allocate(ic_no(0:npart))
-    allocate(ic_location(0:npart,int(mnhl/nsize*4)))
-    do irank=0,npart    
-       ic_no(irank)=0
-    enddo
+!    allocate(ic_no(0:npart))
+!    allocate(ic_location(0:npart,int(mnhl/nsize*4)))
+!    do irank=0,npart    
+!       ic_no(irank)=0
+!    enddo
     
     do i=1,cnode
         ic=cn_cell(i)
-        do irank=0,npart
-            if(ic.ge.istarttransfer(irank) .and. ic.le.iendtransfer(irank))then
-                ic_no(irank)=ic_no(irank)+1
-                ic_location(irank,ic_no(irank))=ic
-            endif
-        enddo
+!        do irank=0,npart
+!            if(ic.ge.istarttransfer(irank) .and. ic.le.iendtransfer(irank))then
+!                ic_no(irank)=ic_no(irank)+1
+!                ic_location(irank,ic_no(irank))=ic
+!            endif
+!        enddo
     enddo 
 !    write(*,*)'cnode',cnode
     temp_no=0
-    do irank=0,npart
-       temp_no=temp_no+ic_no(irank)
+!    do irank=0,npart
+!       temp_no=temp_no+ic_no(irank)
 !       write(*,*)'ic_no',ic_no(irank)
 !       if(rank.eq.0)write(*,*)'------rank, ic_no, ic_location',irank, ic_no(irank),ic_location(irank,1:ic_no(irank))
-    enddo
+!    enddo
 !    write(*,*)'temp_no',temp_no
 	endsubroutine store_id_info

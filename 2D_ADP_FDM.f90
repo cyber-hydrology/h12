@@ -19,7 +19,7 @@
     real*8:: time0, timmax
     real*8:: start, finish,tstart,tfinish
     integer:: i, j, lpout, lkout, ms, ci, mstep
-!    integer:: nci, rc, uc, nthreads, nid,tempstart,tempend
+    integer:: nci, rc, uc, nthreads, nid,tempstart,tempend
     logical(4):: resultqq,systemqq
 !   ===============================================
 !              Initialization of MPI process
@@ -67,17 +67,17 @@
 
         ncell=0 ! number of cells
 
-        if(rank.eq.0)write(*,*) 'call mesh_gen'
+        write(*,*) 'call mesh_gen'
         call mesh_gen  ! mesh generation
-        if(rank.eq.0)write(*,*)'end nei_info'
+        write(*,*)'end nei_info'
         
-       tempstart=istartarray(rank)
-       tempend=iendarray(rank)  
+!       tempstart=istartarray(rank)
+!       tempend=iendarray(rank)  
 !     =====================================================        
 !                    INITIALIZATION
 !     =====================================================
       call initiald
-!      if(rank.eq.0)write(*,*)'end initiald'
+      write(*,*)'end initiald'
 !
 !      call ascout_h(time, ci)
 !      call ascout_u
@@ -150,11 +150,11 @@
 !     =================================================================
 !                           writing data
 !     =================================================================
-      if(mod(mstep,lpout)==0)then
+!      if(mod(mstep,lpout)==0)then
 !        if(rank.eq.0)write(*,'(f14.4)') time
-          finish=MPI_Wtime()
+!          finish=MPI_Wtime()
 !        if(rank.eq.0)print'("running cpu time=",f12.3," <sec>")', finish-start
-      endif
+!      endif
 
        if(mod(mstep,lkout) == 0)then
  

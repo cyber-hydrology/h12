@@ -9,7 +9,7 @@
 !      use mpi
       implicit none
       
-!      integer:: i,j,nci
+      integer:: i,j,nci
     real*8:: tstart,tfinish
 !      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
 !    call MPI_BARRIER(MPI_COMM_WORLD,ierror)   
@@ -19,21 +19,22 @@
 !$omp barrier
 !$omp parallel do
 !    do nci=tempstart,tempend
-!      umo(nci)= um(nci); vno(nci)=vn(nci)
-!      ho(nci) = h(nci)
-!      um_fine(nci)=0.0d0
-!      vn_fine(nci)=0.0d0
-!      qlme(nci)=0.0d0
-!    enddo
+     do nci=1, ncell
+      umo(nci)= um(nci); vno(nci)=vn(nci)
+      ho(nci) = h(nci)
+      um_fine(nci)=0.0d0
+      vn_fine(nci)=0.0d0
+      qlme(nci)=0.0d0
+    enddo
 !!$omp end parallel do
 !!$omp barrier
 
-    if(rank.eq.0)then
+!    if(rank.eq.0)then
 !!$omp barrier
 !!$omp parallel do
-!    do i=1, cnode
-!      qlme(cn_cell(i))=0.0d0
-!    enddo
+    do i=1, cnode
+      qlme(cn_cell(i))=0.0d0
+    enddo
 !!$omp end parallel do
 !!$omp barrier
 
@@ -54,5 +55,5 @@
 !      qsum_mh(i) = 0.0d0
 !      hsum_mh(i) = 0.0d0
 !    enddo
-    endif
+!    endif
     end subroutine forward

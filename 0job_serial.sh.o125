@@ -1,0 +1,22 @@
+ finish reading setup file
+ START READING RAINFALL DATA
+ end reading rainfall data
+ start reading dem file
+ end reading bs_dem
+ start reading landcover file
+ end reading landcover data
+ call mesh_gen
+ start seed find
+ end seed find
+ end regula
+ ncell=       90083
+ end store neighborhood cell info
+ end allocation of variables
+ end store_id_info
+ jm=         432 dx=   10.0000000000000      div_max=           0 ighost=
+           0
+ end store_id
+ end nei_info
+ end initiald
+ ending open asc file
+ ending writing asc file

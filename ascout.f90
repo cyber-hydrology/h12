@@ -8,7 +8,7 @@
       integer::i,j,k,ci,cind,nm
       real*8:: xnode, ynode, bs, t,total_h
       character(len=6)::ft
-      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)  ! MPI local variables
+!      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)  ! MPI local variables
       
 !    if(rank.ne.0)then
 !        call MPI_SEND(h(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
@@ -21,7 +21,7 @@
 !    endif
 !    call MPI_BCAST(h,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
     
-      if(rank.eq.0)then
+!      if(rank.eq.0)then
       cind=0
       do i=1, im
         do j=1, jm
@@ -33,12 +33,12 @@
           endif
        enddo
       enddo
-      endif
+!      endif
       
-      if(rank.eq.0)print*,"ending h to h_grid"
+!      if(rank.eq.0)print*,"ending h to h_grid"
      write(ft,'(i6)') int(t)+100000
-      if(rank.eq.0)print*,"ending ft"
-      if(rank.eq.0)then
+!      if(rank.eq.0)print*,"ending ft"
+!      if(rank.eq.0)then
       open(200, file='./results/ascout/ascout_h_'//ft//'.asc', action='write') 
       print*,"ending open asc file"
       write(200,'(a5,1x,i10)')'ncols',im    !i=x-direction
@@ -60,7 +60,7 @@
 
       close(200)
       print*,"ending writing asc file"
-      endif
+!      endif
       
       end subroutine ascout_h
 
@@ -74,7 +74,7 @@
       integer::i,j,k,ci,cind,nm
       real*8:: xnode, ynode, bs, t,total_h
       character(len=6)::ft
-      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)  ! MPI local variables
+!      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)  ! MPI local variables
       
 !    if(rank.ne.0)then
 !        call MPI_SEND(um(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
@@ -87,7 +87,7 @@
 !    endif
 !    call MPI_BCAST(um,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
     
-      if(rank.eq.0)then
+!      if(rank.eq.0)then
       cind=0
       do i=1, im
         do j=1, jm
@@ -101,12 +101,12 @@
           endif
        enddo
       enddo
-      endif
+!      endif
       
-      if(rank.eq.0)print*,"ending u to u_grid"
+!      if(rank.eq.0)print*,"ending u to u_grid"
       write(ft,'(i6)') int(t)+100000
-      if(rank.eq.0)print*,"ending ft"
-      if(rank.eq.0)then
+!      if(rank.eq.0)print*,"ending ft"
+!      if(rank.eq.0)then
       open(200, file='./results/ascout/ascout_u_'//ft//'.asc', action='write') 
       print*,"ending open asc file"
       write(200,'(a5,1x,i10)')'ncols',im    !i=x-direction
@@ -130,7 +130,7 @@
 
       close(200)
       print*,"ending writing asc file"
-      endif
+!      endif
       
       end subroutine ascout_u
 	  
@@ -144,7 +144,7 @@
       integer::i,j,k,ci,cind,nm
       real*8:: xnode, ynode, bs, t,total_h
       character(len=6)::ft
-      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)  ! MPI local variables
+!      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)  ! MPI local variables
       
 !    if(rank.ne.0)then
 !        call MPI_SEND(vn(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
@@ -157,7 +157,7 @@
 !    endif
 !    call MPI_BCAST(vn,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
     
-      if(rank.eq.0)then
+!      if(rank.eq.0)then
       cind=0
       do i=1, im
         do j=1, jm
@@ -171,12 +171,12 @@
           endif
        enddo
       enddo
-      endif
+!      endif
       
-      if(rank.eq.0)print*,"ending v to v_grid"
+!      if(rank.eq.0)print*,"ending v to v_grid"
       write(ft,'(i6)') int(t)+100000
-      if(rank.eq.0)print*,"ending ft"
-      if(rank.eq.0)then
+!      if(rank.eq.0)print*,"ending ft"
+!      if(rank.eq.0)then
       open(200, file='./results/ascout/ascout_v_'//ft//'.asc', action='write') 
       print*,"ending open asc file"
       write(200,'(a5,1x,i10)')'ncols',im    !i=x-direction
@@ -200,6 +200,6 @@
 
       close(200)
       print*,"ending writing asc file"
-      endif
+!      endif
       
       end subroutine ascout_v

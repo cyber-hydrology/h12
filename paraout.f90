@@ -10,7 +10,7 @@
     real*8:: x, y, dxl, dyl, x1, y1, s0, x_end, t, z_end, zz
 	character(len=5):: out_time
 	character(len=3):: cases
-      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)    
+!      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE)    
 !	========================================================    
 !    if(rank.ne.0)then
 !        call MPI_SEND(h(istarttransfer(rank):iendtransfer(rank)),ichunktransfer(rank), &
@@ -24,7 +24,7 @@
 !        enddo
 !    endif
 !    call MPI_BARRIER(MPI_COMM_WORLD,ierror)
-       if(rank.eq.0)then
+!       if(rank.eq.0)then
 !$$$$$$       write(out_time,'(i5)') nint(t*1000.d0)+10000
        write(out_time,'(i5)') nint(t)+10000
 	  write(cases,'(i3)') ci+100
@@ -102,7 +102,7 @@
 !$$$$$$              enddo
              
             CLOSE(30) 
-        endif            
+!        endif            
 	end subroutine paraout
 
 !	========================================
@@ -118,7 +118,7 @@
     character(len=5):: out_time
     character(len=3):: cases
 
-    if(rank.eq.0)then
+!    if(rank.eq.0)then
     write(out_time,'(i5)') nint(t)+10000
     write(cases,'(i3)') ci+100
 
@@ -241,7 +241,7 @@
         enddo    
 
            CLOSE(600)             
-       endif
+!       endif
        
     end subroutine para_pipe
 
@@ -258,7 +258,7 @@
     character(len=5):: out_time
     character(len=3):: cases
     
-    if(rank.eq.0)then
+!    if(rank.eq.0)then
     write(out_time,'(i5)') nint(t)+10000
     write(cases,'(i3)')ci
     
@@ -330,6 +330,6 @@
         	enddo                  
 
            CLOSE(610)   
-      endif           
+!      endif           
 
     end subroutine para_mh  

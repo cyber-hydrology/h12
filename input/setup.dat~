@@ -1,0 +1,10 @@
+0  95  0  0                                	          ! day, hour, min, sec
+0.025                                                     ! dt
+600                                         	          ! dpout : display time step
+3600                                     	          ! dkout : disk record time step
+3600                                        	          ! dtrain : time interval of rainfall data
+3600                                               	  ! dtlevel : time interval of boundary water level
+input/dem_d_asc02.asc                                          ! location & name of DEM
+input/mulc_d_asc02.asc                                      ! location & name of Landuse data
+input/dwlevel.dat                                         ! name of boundary water level
+input/Rainfall_Port_new.dat                                   ! rainfall data

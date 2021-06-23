@@ -8,15 +8,15 @@
       implicit none
 
       integer:: nci, lc, rc, uc, dc, ruc, rdc, ldc, luc, it
-      integer:: i, k, lev, levn, ndir, ir, jr, irh
+      integer:: i, k, lev, levn, ndir, ir, jr, irh, j
       real*8:: ddx, ddy, xc, yc, um_rc, vn_uc,rfcd,rr, level
       real*8:: x_dist, y_dist, x_rest, y_rest
 !      integer:: j,tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
-!      integer:: recv_request(100),send_request(100)
-!      real*8:: htemp(mnhl*npart),qlmetemp(mnhl*npart)
-!      integer:: send_request_h(cnode),recv_request_h(cnode)
-!      integer:: send_request_qlme(cnode),recv_request_qlme(cnode)
-!      integer:: sendingrank,receiverank,tag_h(1:500)=(/(j,j=1,500)/),tag_qlme(1:500)=(/(j,j=1,500)/),jstart,jend
+      integer:: recv_request(100),send_request(100)
+      real*8:: htemp(mnhl*npart),qlmetemp(mnhl*npart)
+      integer:: send_request_h(cnode),recv_request_h(cnode)
+      integer:: send_request_qlme(cnode),recv_request_qlme(cnode)
+      integer:: sendingrank,receiverank,tag_h(1:500)=(/(j,j=1,500)/),tag_qlme(1:500)=(/(j,j=1,500)/),jstart,jend
 
 !        if(rank.eq.0)then
 !            do j=1,npart
@@ -194,7 +194,7 @@ y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
 !        call MPI_WAIT(send_request(4),status,ierror)
 !        print*,'mpi_recv at rank',rank,'ghost',ighost,imoveupend(rank-1)-imoveupstart(rank-1)+1, &
 !        imoveupend(rank-1),imoveupstart(rank-1)
-    endif
+!    endif
 !    call MPI_BCAST(h,ncell,MPI_REAL8,0,MPI_COMM_WORLD,ierror)
 !      call MPI_BARRIER(MPI_COMM_WORLD,ierror)
 !      if(rank.eq.0)tfinish=omp_get_wtime()

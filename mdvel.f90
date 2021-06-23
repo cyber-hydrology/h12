@@ -16,16 +16,17 @@
     integer:: ndir, i, j
     real*8:: phi,tstart,tfinish,dd1_sw_tmp
       integer:: recv_request(100),send_request(100),recv_request2(100),send_request2(100)
-      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
+!      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
 !     =================================
 !        hm, hn calculation
 !     =================================
-    tempstart=istartarray(rank)
-    tempend=iendarray(rank)
+!    tempstart=istartarray(rank)
+!    tempend=iendarray(rank)
 !!      if(rank.eq.0)tstart = omp_get_wtime()
 !!$omp barrier
 !!$omp parallel do private(h_lc,h_dc,lc,rc,uc,dc)
 !      do nci=tempstart,tempend
+       do nci=1, ncell
       lc = nei_info(nci,4); rc = nei_info(nci,2)
       uc = nei_info(nci,1); dc = nei_info(nci,3)
         if(dc==0)then
@@ -76,7 +77,8 @@
 !     =================================
 !!$omp barrier
 !!$omp parallel do private(lc,rc,uc,dc)
-	  do nci=tempstart,tempend
+!	  do nci=tempstart,tempend
+	  do nci=1, ncell
       lc = nei_info(nci,4); rc = nei_info(nci,2)
       uc = nei_info(nci,1); dc = nei_info(nci,3)
      
@@ -117,7 +119,8 @@
 !     =================================
 !!$omp barrier
 !!$omp parallel do private(vv1_uc,uu1_rc,lc,rc,uc,dc)
-	  do nci=tempstart,tempend
+!	  do nci=tempstart,tempend
+          do nci=1, ncell 
       lc = nei_info(nci,4); rc = nei_info(nci,2)
       uc = nei_info(nci,1); dc = nei_info(nci,3)
         if(uc==0)then
@@ -154,14 +157,13 @@
 !        uua, vva calculation
 !     =================================
 !!$omp barrier
-!!$omp parallel do private(vv1_uc,uu1_rc,uu1_dc,vv1_lc,uu1_rdc,vv1_luc, &
-lc,rc,uc,dc,ruc,rdc,ldc,luc)
-!    do nci=1, ncell
+!!$omp parallel do private(vv1_uc,uu1_rc,uu1_dc,vv1_lc,uu1_rdc,vv1_luc,lc,rc,uc,dc,ruc,rdc,ldc,luc)
+    do nci=1, ncell
 !	  do nci=tempstart,tempend
-!      lc = nei_info(nci,4); rc = nei_info(nci,2)
-!      uc = nei_info(nci,1); dc = nei_info(nci,3)
-!      ruc = nei_info(nci,5); rdc = nei_info(nci,6)
-!      ldc = nei_info(nci,7); luc = nei_info(nci,8)
+      lc = nei_info(nci,4); rc = nei_info(nci,2)
+      uc = nei_info(nci,1); dc = nei_info(nci,3)
+      ruc = nei_info(nci,5); rdc = nei_info(nci,6)
+      ldc = nei_info(nci,7); luc = nei_info(nci,8)
 !          
         if(uc==0)then
           vv1_uc=vv1_ugc(nci)
