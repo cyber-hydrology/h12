@@ -11,7 +11,7 @@
       integer:: i, k, lev, levn, ndir, ir, jr, irh
       real*8:: ddx, ddy, xc, yc, um_rc, vn_uc,rfcd,rr, level
       real*8:: x_dist, y_dist, x_rest, y_rest
-      integer:: j,tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
+!      integer:: j,tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
 !      integer:: recv_request(100),send_request(100)
 !      real*8:: htemp(mnhl*npart),qlmetemp(mnhl*npart)
 !      integer:: send_request_h(cnode),recv_request_h(cnode)
