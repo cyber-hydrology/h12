@@ -16,8 +16,8 @@
 !    tempstart=istartarray(rank)
 !    tempend=iendarray(rank)
 !    if(rank.eq.1)tstart = MPI_Wtime()
-!$omp barrier
-!$omp parallel do
+!!$omp barrier
+!!$omp parallel do
 !    do nci=tempstart,tempend
      do nci=1, ncell
       umo(nci)= um(nci); vno(nci)=vn(nci)

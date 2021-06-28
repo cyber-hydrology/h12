@@ -156,7 +156,7 @@
 !         ighost = int(jm*4)
 !         ighost = int(jm*2)
 
-print*, 'jm=',jm,'dx=',dx, 'div_max=', div_max, 'ighost=',ighost
+!print*, 'jm=',jm,'dx=',dx, 'div_max=', div_max, 'ighost=',ighost
 
 !        allocate(ichunkarray(0:npart),istartarray(0:npart),iendarray(0:npart)) 
 !        allocate(istarttransfer(0:npart),iendtransfer(0:npart),ichunktransfer(0:npart))
@@ -233,17 +233,17 @@ print*, 'jm=',jm,'dx=',dx, 'div_max=', div_max, 'ighost=',ighost
 !       ic_no(irank)=0
 !    enddo
     
-    do i=1,cnode
-        ic=cn_cell(i)
+!    do i=1,cnode
+!        ic=cn_cell(i)
 !        do irank=0,npart
 !            if(ic.ge.istarttransfer(irank) .and. ic.le.iendtransfer(irank))then
 !                ic_no(irank)=ic_no(irank)+1
 !                ic_location(irank,ic_no(irank))=ic
 !            endif
 !        enddo
-    enddo 
+!    enddo 
 !    write(*,*)'cnode',cnode
-    temp_no=0
+!    temp_no=0
 !    do irank=0,npart
 !       temp_no=temp_no+ic_no(irank)
 !       write(*,*)'ic_no',ic_no(irank)

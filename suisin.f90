@@ -150,8 +150,8 @@
       endif
            ddx = dx/dble(2**lev)
 
-!        h(nci) = ho(nci)-dt2*((um_rc-um(nci))/ddx+(vn_uc-vn(nci))/ddy-qlme(nci)-rr)
-!        h(nci) = max(h(nci),0.0d0)
+        h(nci) = ho(nci)-dt2*((um_rc-um(nci))/ddx+(vn_uc-vn(nci))/ddy-qlme(nci)-rr)
+        h(nci) = max(h(nci),0.0d0)
 !       if(time>100)print*,nci, h(nci)
 !if(nci==647993) print*, time, h(nci-1),h(nci), h(nci+1)
 !--------down stream boundary condition----------------------------

@@ -15,7 +15,7 @@
     integer:: nci, hh, lc, rc, uc, dc, ruc, rdc, ldc, luc
     integer:: ndir, i, j
     real*8:: phi,tstart,tfinish,dd1_sw_tmp
-      integer:: recv_request(100),send_request(100),recv_request2(100),send_request2(100)
+!      integer:: recv_request(100),send_request(100),recv_request2(100),send_request2(100)
 !      integer:: tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
 !     =================================
 !        hm, hn calculation
