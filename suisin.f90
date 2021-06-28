@@ -12,11 +12,11 @@
       real*8:: ddx, ddy, xc, yc, um_rc, vn_uc,rfcd,rr, level
       real*8:: x_dist, y_dist, x_rest, y_rest
 !      integer:: j,tag(1:100)=(/(j,j=1,100)/), status(MPI_STATUS_SIZE),tempstart,tempend
-      integer:: recv_request(100),send_request(100)
-      real*8:: htemp(mnhl*npart),qlmetemp(mnhl*npart)
-      integer:: send_request_h(cnode),recv_request_h(cnode)
-      integer:: send_request_qlme(cnode),recv_request_qlme(cnode)
-      integer:: sendingrank,receiverank,tag_h(1:500)=(/(j,j=1,500)/),tag_qlme(1:500)=(/(j,j=1,500)/),jstart,jend
+!      integer:: recv_request(100),send_request(100)
+!      real*8:: htemp(mnhl*npart),qlmetemp(mnhl*npart)
+!      integer:: send_request_h(cnode),recv_request_h(cnode)
+!      integer:: send_request_qlme(cnode),recv_request_qlme(cnode)
+!      integer:: sendingrank,receiverank,tag_h(1:500)=(/(j,j=1,500)/),tag_qlme(1:500)=(/(j,j=1,500)/),jstart,jend
 
 !        if(rank.eq.0)then
 !            do j=1,npart
@@ -48,11 +48,11 @@
       
       err_ini=0.0d0
       
-!$omp barrier
-!$omp parallel do private(nci,lc,rc,uc,dc,ruc,rdc,ldc,luc,lev,levn,ndir, &
-ddx,ddy,xc,yc,um_rc,vn_uc,rfcd,x_dist,y_dist,x_rest,y_rest,ir,jrm,jr,rr,it,level,irh)&
-shared(h,ho,um,vn,nei_info,c_lev_id,um_fine,vn_fine,c_land,qlme,x_rad_ori,&
-y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
+!!$omp barrier
+!!$omp parallel do private(nci,lc,rc,uc,dc,ruc,rdc,ldc,luc,lev,levn,ndir, &
+!ddx,ddy,xc,yc,um_rc,vn_uc,rfcd,x_dist,y_dist,x_rest,y_rest,ir,jrm,jr,rr,it,level,irh)&
+!shared(h,ho,um,vn,nei_info,c_lev_id,um_fine,vn_fine,c_land,qlme,x_rad_ori,&
+!y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
       do nci=1, ncell
           lc = nei_info(nci,4); rc = nei_info(nci,2)
           uc = nei_info(nci,1); dc = nei_info(nci,3)
@@ -167,11 +167,11 @@ y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
 100   enddo
 !
 
-!$omp end parallel do
-!$omp barrier
+!!$omp end parallel do
+!!$omp barrier
       
 !      if(rank.eq.0)tstart=omp_get_wtime()
-    if(rank.ne.npart)then
+!    if(rank.ne.npart)then
 !        call MPI_ISEND(h(imoveupstart(rank):imoveupend(rank)),ighost, &
 !        MPI_REAL8,rank+1,tag(2), MPI_COMM_WORLD,send_request(2),ierror)
         
@@ -182,7 +182,7 @@ y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
 !        call MPI_WAIT(recv_request(4),status,ierror)
 !        print*,'mpi_send from rank',rank,'ighost',ighost,imoveupend(rank)-imoveupstart(rank)+1, &
 !        imoveupend(rank),imoveupstart(rank)
-    endif
+!    endif
 !    if(rank.ne.0)then
 !        call MPI_IRECV(h(imoveupstart(rank-1):imoveupend(rank-1)),ighost, &
 !        MPI_REAL8,rank-1,tag(2), MPI_COMM_WORLD,recv_request(2),ierror)
@@ -215,26 +215,26 @@ y_rad_ori,rad_cell,baseo,dtlevel,dwlevel,time)
 !        enddo
 !    endif
 !    call MPI_BARRIER(MPI_COMM_WORLD,ierror)
-      if(rank.ne.0)then
-        do i=1,ic_no(rank)
-          htemp(i)=h(ic_location(rank,i))
-        enddo
+!      if(rank.ne.0)then
+!        do i=1,ic_no(rank)
+!          htemp(i)=h(ic_location(rank,i))
+!        enddo
 !        call MPI_ISEND(htemp(1:ic_no(rank)),ic_no(rank), &
 !                       MPI_REAL8,0,tag_h(rank), MPI_COMM_WORLD,send_request_h(rank),ierror)        
 !        call MPI_WAIT(send_request_h(rank),status,ierror)
-      else
-        do j=1,npart
-           sendingrank = j
-           jstart=((j-1)*mnhl+1)
-           jend=((j-1)*mnhl+ic_no(j))
+!      else
+!        do j=1,npart
+!           sendingrank = j
+!           jstart=((j-1)*mnhl+1)
+!           jend=((j-1)*mnhl+ic_no(j))
 !           call MPI_IRECV(htemp(jstart:jend),ic_no(j), &
 !                          MPI_REAL8,sendingrank,tag_h(j), MPI_COMM_WORLD,recv_request_h(j),ierror)
 !           call MPI_WAIT(recv_request_h(j),status,ierror)
-           do k=1,ic_no(j)
-              h(ic_location(j,k))=htemp(jstart+k-1)
-           enddo
-        enddo
-      endif
+!           do k=1,ic_no(j)
+!              h(ic_location(j,k))=htemp(jstart+k-1)
+!           enddo
+!        enddo
+!      endif
 !      call MPI_BARRIER(MPI_COMM_WORLD,ierror) 
 
  end subroutine suisin
